@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blue Ocean Grille</title>
+<style>
+:root{--c:#0077be;--d:#003b5c;--bg:#e0f7fa}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:Georgia,serif;background:var(--bg);color:var(--d);line-height:1.6}
+nav{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:16px 6%;background:#ffffffcc;backdrop-filter:blur(8px);z-index:9}
+nav b{font-size:1.4rem;color:var(--c)}nav ul{display:flex;gap:24px;list-style:none}nav a{text-decoration:none;color:var(--d)}
+#bt{display:none;background:none;border:0;font-size:1.6rem}
+.hero{min-height:80vh;display:grid;place-items:center;text-align:center;padding:40px 6%;background:linear-gradient(rgba(0,119,190,.6),rgba(0,119,190,.6)),radial-gradient(circle at 30% 20%,#0099cc,#004d66);color:#fff}
+.hero h1{font-size:clamp(2.2rem,6vw,4.5rem)}
+.btn{display:inline-block;margin-top:20px;padding:14px 32px;background:var(--c);color:#fff;border:0;border-radius:40px;text-decoration:none;cursor:pointer;font-size:1rem}
+section{padding:70px 6%;max-width:1100px;margin:auto}h2{text-align:center;font-size:2rem;margin-bottom:30px}
+.tabs{display:flex;justify-content:center;gap:10px;margin-bottom:24px}
+.tabs button{padding:8px 22px;border:1px solid var(--c);background:none;border-radius:30px;cursor:pointer;color:var(--c)}
+.tabs .on{background:var(--c);color:#fff}
+.grid{display:none;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}.grid.on{display:grid}
+.card{background:#fff;padding:22px;border-radius:14px;box-shadow:0 6px 20px #0001}.card span{float:right;color:var(--c);font-weight:bold}
+form{display:grid;gap:12px;max-width:480px;margin:auto}input,select{padding:12px;border:1px solid #ccc;border-radius:8px;font-size:1rem}
+footer{text-align:center;padding:24px;background:var(--d);color:#fff}
+.rv{opacity:0;transform:translateY(30px);transition:.7s}.rv.show{opacity:1;transform:none}
+@media(max-width:700px){nav ul{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:#ffffffcc;padding:20px}nav ul.open{display:flex}#bt{display:block}}
+</style></head><body>
+<nav><b>Blue Ocean Grille</b><button id="bt">☰</button><ul id="m"><li><a href="#menu">Menu</a></li><li><a href="#book">Book</a></li></ul></nav>
+<header class="hero"><div><h1>Experience Coastal Flavors</h1><p>Fresh seafood dishes crafted with local ingredients.</p><a class="btn" href="#book">Reserve a Table</a></div></header>
+<section id="menu" class="rv"><h2>Our Menu</h2>
+<div class="tabs"><button class="on" data-t="s">Starters</button><button data-t="m">Mains</button></div>
+<div class="grid on" id="s"><div class="card">Crab Cakes <span>$10</span><p>Served with tangy remoulade.</p></div><div class="card">Mango Salsa <span>$8</span><p>Fresh and vibrant.</p></div></div>
+<div class="grid" id="m"><div class="card">Grilled Mahi Mahi <span>$20</span><p>With a citrus glaze.</p></div><div class="card">Lobster Linguine <span>$25</span><p>Pasta in garlic butter sauce.</p></div></div></section>
+<section id="book" class="rv"><h2>Book a Table</h2>
+<form id="f"><input required placeholder="Your name"><input type="date" required><select><option>2 people</option><option>4 people</option><option>6+ people</option></select><button class="btn">Reserve</button><p id="ok"></p></form></section>
+<footer>© 2026 Blue Ocean Grille</footer>
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+$('#bt').onclick=()=>$('#m').classList.toggle('open');
+$$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button,.grid').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('#'+b.dataset.t).classList.add('on')});
+$('#f').onsubmit=e=>{e.preventDefault();$('#ok').textContent='✅ Table reserved! See you soon.';e.target.reset()};
+const io=new IntersectionObserver(a=>a.forEach(x=>x.isIntersecting&&x.target.classList.add('show')));$$('.rv').forEach(x=>io.observe(x));
+</script></body></html>
